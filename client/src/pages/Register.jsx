@@ -18,14 +18,20 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // prevent refresh
+    
     try {
-      await axios.post("/auth/register", inputs);
+      await axios.post("/api/auth/register", inputs);
       navigate("/login");
     } catch (err) {
-      setError(err.response.data);
+      // setError(err.response.data);
+      console.log(err)
     }
   };
+// test
+  // axios.get("/test")
+  // .then(response => console.log(response.data))
+  // .catch(error => console.log(error));
 
   return (
     <div className="auth">
