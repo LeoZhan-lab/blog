@@ -10,29 +10,62 @@ import { AuthContext } from "../context/authContext";
 import DOMPurify from "dompurify";
 
 const Single = () => {
+
+  const [post, setPost] = useState({})
+
+  const location = useLocation()
+  const navigator = useNavigate()
+
+  const postId = location.pathname.split("/")[2]
+
+  const {currentUser} = useContext(AuthContext)
+
+  useEffect(()=>{
+    const fetchData = async() => {
+      try{
+        const res = await axios.get('/api/posts/${postId}');
+        setPost(res.data);
+      }catch(err){
+        console.log(err)
+      }
+    };
+    fetchData();
+  }, [postId]);
+
+  const handleDelete = async () =>{
+    try{
+      await axios.delete('/posts/${postId}');
+      navigator("/");
+    } catch(err){
+      console.log(err)
+    }
+
+  }
+
   return (
     <div className="single">
       <div className="content">
-        <img src="https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />    
+        <img src= {post?.img} alt="" />    
           <div className="user">
-            <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+            {post.userImg && <img 
+              src={post.userImg} 
+              alt="" 
+            />}
             <div className="info">
-              <span>John</span>
-              <p>Posted two days ago</p>
+              <span>{post.username}</span>
+              <p>Posted {moment(post.data).fromNow()}</p>
             </div>
+            {currentUser.username === post.username && (
             <div className="edit">
               <Link to={'/write?edit=2'}>
                 <img src={Edit} alt="" />
               </Link>
-              <Link to={'Delete'}>
-                <img src={Delete} alt="" />
-              </Link>
+                <img onClick={handleDelete} src={Delete} alt="" />
             </div>
+            )}
           </div>
-        <h1>My First Blog</h1>
-        <p>
-          dakfalkfldkla kdlfklkaldkflkalkf
-        </p>
+        <h1>{post.title}</h1>      
+          {post.desc}
       </div>
       <Menu/>
     </div>

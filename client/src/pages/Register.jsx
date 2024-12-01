@@ -24,14 +24,10 @@ const Register = () => {
       await axios.post("/api/auth/register", inputs);
       navigate("/login");
     } catch (err) {
-      // setError(err.response.data);
+      setError(err.response.data);
       console.log(err)
     }
   };
-// test
-  // axios.get("/test")
-  // .then(response => console.log(response.data))
-  // .catch(error => console.log(error));
 
   return (
     <div className="auth">

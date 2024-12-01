@@ -9,13 +9,14 @@ import {
 
 const router = express.Router();
 
-router.get("/test", (req, res) => {
-  res.json("this is post")
-})
-// router.get("/", getPosts);
-// router.get("/:id", getPost);
-// router.post("/", addPost);
-// router.delete("/:id", deletePost);
-// router.put("/:id", updatePost);
+// router.get("/test", (req, res) => {
+//   res.json("this is post")
+// })
+
+router.get("/", getPosts);
+router.get("/:id", getPost);
+router.post("/", addPost);
+router.delete("/:id", deletePost);
+router.put("/:id", updatePost);
 
 export default router;

@@ -23,7 +23,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(inputs)
+      await login(inputs);
+      // await axios.post("/api/auth/login", inputs); //login(inputs)
       navigate("/");
     } catch (err) {
       setError(err.response.data);
